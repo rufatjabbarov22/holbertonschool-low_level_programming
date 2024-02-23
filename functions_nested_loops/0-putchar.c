@@ -9,7 +9,7 @@
 
 int main(void)
 {
-         int i = 0;
+       	int i = 0;
          char array[8] = {'_', 'p', 'u', 't',
                          'c', 'h', 'a', 'r'};
 
