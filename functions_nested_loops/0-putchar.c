@@ -1,22 +1,21 @@
-include "main.h"
+#include "main.h"
 
 /**
- *  * main - prints _putchar, followed by a new line
- *   * Return: Always 0 (Succcess)
- *    */
-
+ *  * main - The entry point
+ *   * Description: Prints _putchar, followed by a new line
+ *    * Return: Always (0) when Successfull
+ *     */
 
 int main(void)
 {
-	_putchar('_');
-	_putchar('p');
-	_putchar('u');
-	_putchar('t');
-	_putchar('c');
-	_putchar('h');
-	_putchar('a');
-	_putchar('r');
+    int i = 0;
+    char array[8] = {'_', 'p', 'u', 't',
+    'c', 'h', 'a', 'r'};
+     while (i < 8)
+	{
+	  _putchar(array[i]);
+	i++;
+												}
 	_putchar('\n');
-
 	return (0);
 }
