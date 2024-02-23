@@ -6,16 +6,21 @@
  *    * Return: Always (0) when Successfull
  *     */
 
+
 int main(void)
 {
-    int i = 0;
-    char array[8] = {'_', 'p', 'u', 't',
-    'c', 'h', 'a', 'r'};
+         int i = 0;
+         char array[8] = {'_', 'p', 'u', 't',
+                         'c', 'h', 'a', 'r'};
+
      while (i < 8)
 	{
-	  _putchar(array[i]);
-	i++;
-												}
-	_putchar('\n');
+	      
+	       	_putchar(array[i]);
+	        
+	       	i++;
+	}
+
+        _putchar('\n');
 	return (0);
 }
