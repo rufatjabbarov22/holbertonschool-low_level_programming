@@ -1,20 +1,20 @@
 #include "main.h"
 
 /**
-*main - check the code
+* print_rev - function that prints a string, followed by a new line, to stdout
 *
-*Return: Always 0.
+* @s: This is my input String
 */
 
 void print_rev(char *s)
 {
 	int i;
 
-	for(i = 0; s[i] != '\0'; i++)
+	for (i = 0; s[i] != '\0'; i++)
 		;
-	for(i = i - 1; s[i] != '\0'; i--)
+	for (i = i - 1; s[i] != '\0'; i--)
 	{
 		_putchar(s[i]);
 	}
-	-putchar('\n');
+	_putchar('\n');
 }
