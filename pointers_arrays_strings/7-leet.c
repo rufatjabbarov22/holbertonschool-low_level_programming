@@ -6,20 +6,22 @@
 *
 *Return: address of s
 */
-
 char *leet(char *s)
 {
-	int i, j;
-	char a[] = "aAeEoOtT1L";
-	char b[] = "443007711";
+    int i, j;
+    char a[] = "aAeEoOtTlL";
+    char b[] = "4433007711";
 
-	for (i = 0; *(s + i); i++)
-	{
-		for (j = 0; j <= 9; j++)
-		{
-			if (a[j] == *(s + i))
-				*(s + i) = b[j];
-		}
-	}
-	return (s);
+    for (i = 0; s[i]; i++)
+    {
+        for (j = 0; j < 10; j++)
+        {
+            if (a[j] == s[i])
+            {
+                s[i] = b[j];
+                break;
+            }
+        }
+    }
+    return (s);
 }
