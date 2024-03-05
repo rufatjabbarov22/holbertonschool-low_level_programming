@@ -4,6 +4,7 @@
 *_strspn - search the number of bytes in the initial
 *segment of s which consist only of bytes from accept
 *@s:reference bytes container
+*@accept: reference bytes container
 *
 *Return: returns the number of bytes in the initial
 *segment of s which consist only of bytes from accept
