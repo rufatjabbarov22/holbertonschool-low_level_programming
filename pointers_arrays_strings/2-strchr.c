@@ -2,13 +2,14 @@
 #include <stdio.h>
 
 /**
-*_strchr - returns a pointer to the first occurrence
+*_strchr - Returns a pointer to the first occurrence
 *of the character c in the string s, or NULL if the
-*characher is not found
-*@s: string targeted
+*character is not found
+*
+*@s:string targeted
 *@c:character targeted
 *
-*Returns: returns pointer to first occurence of c
+*Return: returns pointer to first occcurence of c
 */
 
 char *_strchr(char *s, char c)
