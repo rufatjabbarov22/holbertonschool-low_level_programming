@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <string.h> // Include this for strdup
+#include <string.h> /* Include this for strdup */
 #include "lists.h"
 
 /**
