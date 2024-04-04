@@ -1,4 +1,5 @@
-#include <stdlib.h> /* Include this for malloc, free */
+#include <stdlib.h>
+#include <string.h> // Include this for strdup
 #include "lists.h"
 
 /**
