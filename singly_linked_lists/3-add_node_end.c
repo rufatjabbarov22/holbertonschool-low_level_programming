@@ -1,6 +1,5 @@
+#include <stdlib.h> /* Include this for malloc, free */
 #include "lists.h"
-#include <stdlib.h> // Include this for malloc, free
-#include <string.h> // Include this for strdup
 
 /**
  * add_node_end - adds a new node at the end of a list_t list
