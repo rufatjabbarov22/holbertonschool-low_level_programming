@@ -1,5 +1,3 @@
-#include <stdlib.h>
-#include <string.h>
 #include "lists.h"
 
 /**
@@ -7,11 +5,16 @@
  * @head: pointer to pointer to the head of the list
  * @str: string to be duplicated and added to the new node
  *
- * Return: address of the new element, or NULL if it failed
+ * Return: the address of the new element, or NULL if it failed
  */
 list_t *add_node_end(list_t **head, const char *str)
 {
     list_t *new_node, *last_node;
+    size_t len = 0;
+
+    /* Get the length of the string */
+    while (str[len])
+        len++;
 
     /* Allocate memory for new node */
     new_node = malloc(sizeof(list_t));
@@ -25,6 +28,7 @@ list_t *add_node_end(list_t **head, const char *str)
         free(new_node);
         return (NULL);
     }
+    new_node->len = len;
     new_node->next = NULL;
 
     /* If the list is empty, set the new node as the head */
