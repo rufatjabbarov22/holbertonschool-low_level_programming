@@ -1,54 +1,33 @@
-#include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "lists.h"
 
 /**
- * main - check the code
+ * _create_list - Creates a linked list
+ * @str: String to be inserted into the list
  *
- * Return: Always 0.
+ * Return: Pointer to the created list
  */
-int main(void)
+list_t *_create_list(const char *str)
 {
-    list_t *head;
-    list_t *new;
-    list_t hello = {"World", 5, NULL};
-    size_t n;
+    list_t *tmp, *head;
 
-    head = &hello;
+    if (str == NULL)
+        return (NULL);
 
-    new = malloc(sizeof(list_t));
-    if (new == NULL)
+    head = malloc(sizeof(list_t));
+    if (head == NULL)
+        return (NULL);
+
+    head->str = strdup(str);
+    if (head->str == NULL)
     {
-        printf("Error\n");
-        return (1);
+        free(head);
+        return (NULL);
     }
-    new->str = strdup("Hello");
-    if (new->str == NULL)
-    {
-        printf("Error\n");
-        free(new);
-        return (1);
-    }
-    new->len = strlen(new->str);
-    new->next = head;
-    head = new;
 
-    n = print_list(head);
-    printf("-> %lu elements\n", n);
+    head->next = NULL;
 
-    printf("\n");
-
-    /* Free the memory allocated for the strings */
-    free(new->str);
-    new->str = NULL;
-
-    /* Print the list after setting the string to NULL */
-    n = print_list(head);
-    printf("-> %lu elements\n", n);
-
-    /* Free the dynamically allocated memory */
-    free(new);
-    return (0);
+    return (head);
 }
 
