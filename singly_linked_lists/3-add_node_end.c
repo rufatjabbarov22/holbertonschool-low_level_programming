@@ -28,17 +28,17 @@ list_t *add_node_end(list_t **head, const char *str)
 	if (new_node->str == NULL)
 	{
 		free(new_node);
-        return (NULL);
-    }
-    new_node->len = len;
-    new_node->next = NULL;
+		return (NULL);
+	}
+	new_node->len = len;
+	new_node->next = NULL;
 
     /* If the list is empty, set the new node as the head */
-    if (*head == NULL)
-    {
-        *head = new_node;
-        return (new_node);
-    }
+	if (*head == NULL)
+	{
+		*head = new_node;
+		return (new_node);
+	}
 
     /* Traverse the list to find the last node */
     last_node = *head;
