@@ -10,7 +10,7 @@
  */
 list_t *_create_list(const char *str)
 {
-    list_t *tmp, *head;
+    list_t *head;
 
     if (str == NULL)
         return (NULL);
