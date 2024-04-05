@@ -2,6 +2,7 @@
 
 /**
 *get_dnodeint_at_index - Returns the nth node of a dlistint_t linked list
+i
 *@head: Pointer to the head of the list
 *@index: Index of the node, starting from 0
 *
@@ -15,9 +16,9 @@ dlistint_t *get_dnodeint_at_index(dlistint_t *head, unsigned int index)
     while (head && i < index)
     {
         head = head->next;
-        i++;
+	i++;
     }
-
+    
     return (head);
 }
 
