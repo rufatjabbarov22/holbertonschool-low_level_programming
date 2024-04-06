@@ -1,61 +1,127 @@
 #include "main.h"
 
-#define BUFFER_SIZE 1024
+/**
+ * close_andprint - closes a file descriptor and prints
+ * an error message if it fails
+ *
+ * @fd: file descriptor to close
+ *
+ * Return: 0 on success, 100 on failure
+ */
+int close_andprint(int fd)
+{
+	int oops;
+
+	oops = close(fd);
+	if (oops == -1)
+	{
+		dprintf(STDERR_FILENO, "Oops: Can't close fd %d\n", fd);
+		return (100);
+	}
+	return (0);
+}
 
 /**
- * main - Copies the content of a file to another file
- * @argc: Number of arguments
- * @argv: Array of arguments
+ * writing_oops - error handler for a write error
  *
- * Return: 0 on success, otherwise exit with error code
+ * @fd1: first descriptor to close
+ * @fd_go: second descriptor to close
+ * @filename: filename prompting the error
+ *
+ * Return: 99
  */
-int main(int argc, char *argv[])
+int writing_oops(int fd1, int fd_go, char *filename)
 {
-    int fd_from, fd_to;
-    ssize_t bytes_read, bytes_written;
-    char buffer[BUFFER_SIZE];
+	dprintf(STDERR_FILENO, "Oops: Can't write to %s\n", filename);
+	close_andprint(fd1);
+	close_andprint(fd_go);
+	return (99);
+}
 
-    if (argc != 3)
-    {
-        dprintf(STDERR_FILENO, "Usage: %s file_from file_to\n", argv[0]);
-        exit(97);
-    }
+/**
+ * reading_oops - error handler for a read error
+ *
+ * @fd1: first descriptor to close
+ * @fd_go: second descriptor to close
+ * @filename: filename prompting the error
+ *
+ * Return: 98
+ */
+int reading_oops(int fd1, int fd_go, char *filename)
+{
+	dprintf(STDERR_FILENO, "Oops: Can't read from file %s\n", filename);
+	close_andprint(fd1);
+	close_andprint(fd_go);
+	return (98);
+}
 
-    fd_from = open(argv[1], O_RDONLY);
-    if (fd_from == -1)
-    {
-        dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-        exit(98);
-    }
+/**
+ * error_close - close file descriptors
+ *
+ * @fd_back: source file descriptor
+ * @fd_go: destination file descriptor
+ *
+ * Return: 0 on success, or 100
+ */
+int error_close(int fd_back, int fd_go)
+{
+	if ((close_andprint(fd_back) == 100) || (close_andprint(fd_go) == 100))
+	{
+		dprintf(STDERR_FILENO, "Oops: Can't close file descriptors\n");
+		return (100);
+	}
 
-    fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-    if (fd_to == -1)
-    {
-        dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-        exit(99);
-    }
+	return (0);
+}
 
-    while ((bytes_read = read(fd_from, buffer, BUFFER_SIZE)) > 0)
-    {
-        bytes_written = write(fd_to, buffer, bytes_read);
-        if (bytes_written == -1 || bytes_written != bytes_read)
-        {
-            dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-            exit(99);
-        }
-    }
 
-    if (bytes_read == -1)
-    {
-        dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-        exit(98);
-    }
+/**
+ * main - copy one file to another, new file with perms 664
+ * usage - cp file_from file_to
+ *
+ * @ac: number of arg
+ * @av: list of args
+ *
+ * Return: 97 if incorrect num of args
+ * 98 if file_from does not exist or unreadable
+ * 99 if write fails
+ * 100 if file close fails
+ * 0 otherwise
+ */
+int main(int ac, char *av[])
+{
+	char buf[1024];
+	int read_len, write_len, file_back, file_go, error;
 
-    if (close(fd_from) == -1 || close(fd_to) == -1)
-    {
-        dprintf(STDERR_FILENO, "Error: Can't close fd\n");
-        exit(100);
-    }
-
-    return (0);
+	if (ac != 3)
+	{
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		return (97);
+	}
+	file_back = open(av[1], O_RDONLY);
+	if (file_back == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", av[1]);
+		return (98);
+	}
+	file_go = open(av[2], O_WRONLY | O_CREAT | O_TRUNC,
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+	if (file_go == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", av[2]);
+		close_andprint(file_back);
+		return (99);
+	}
+	do {
+		read_len = read(file_back, buf, 1024);
+		if (read_len == -1)
+			return (reading_oops(file_back, file_go, av[1]));
+		write_len = write(file_go, buf, read_len);
+		if (write_len == -1 || write_len != read_len)
+			return (writing_oops(file_back, file_go, av[2]));
+	} while (read_len == 1024);
+	error = error_close(file_back, file_go);
+	if (error != 0)
+		return (100);
+	return (0);
 }
