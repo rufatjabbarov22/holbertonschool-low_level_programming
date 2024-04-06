@@ -1,4 +1,5 @@
 #include "main.h"
+#include <string.h> // Include the string.h header file
 
 /**
  * append_text_to_file - Appends text to the end of a file
