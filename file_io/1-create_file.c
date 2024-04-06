@@ -24,12 +24,12 @@ int create_file(const char *filename, char *text_content)
 	{
 		bytes_written = write(fd, text_content, strlen(text_content));
 		if (bytes_written == -1)
-        {
-            close(fd);
-            return (-1);
-        }
-    }
-
-    close(fd);
+		{
+		close(fd);
+	    return (-1);
+	}
+	}
+	
+	close(fd);
     return (1);
 }
