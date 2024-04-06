@@ -1,17 +1,18 @@
 #include "main.h"
 
-#define BUFFER_SIZE 1024
-
 /**
  * read_textfile - Reads a text file and prints it to the POSIX standard output
  * @filename: The name of the file to read
  *
  * Return: The actual number of letters it could read and print
+ *         0 if the file can not be opened or read
+ *         0 if filename is NULL
+ *         0 if write fails or does not write the expected amount of bytes
  */
 ssize_t read_textfile(const char *filename)
 {
     int fd, bytes_read, bytes_written;
-    char buffer[BUFFER_SIZE];
+    char buffer[1024];
 
     if (filename == NULL)
         return (0);
@@ -22,7 +23,7 @@ ssize_t read_textfile(const char *filename)
         return (0);
 
     /* Read from file */
-    bytes_read = read(fd, buffer, BUFFER_SIZE);
+    bytes_read = read(fd, buffer, 1024);
     if (bytes_read == -1)
     {
         close(fd);
