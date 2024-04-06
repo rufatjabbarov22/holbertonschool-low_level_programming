@@ -1,3 +1,4 @@
+#include <stddef.h> // Add this line to include the definition of NULL
 #include "main.h"
 
 /**
